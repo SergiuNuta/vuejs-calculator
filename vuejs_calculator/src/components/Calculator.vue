@@ -42,7 +42,6 @@ export default {
     return {
       calcCurrent: 0,
       currentString: "",
-      logList: "",
       operator: null,
       operatorClicked: false,
       rhsOperand: null,
@@ -66,13 +65,6 @@ export default {
       this.rhsOperand = null;
       this.operatorClicked = false;
     },
-    // addTolog(number) {
-    //     if(this.operatorClicked == false) {
-    //         this.logList += `${this.currentString}${"+++"}${number}`;
-    //         this.currentString = "";
-    //         this.operatorClicked = true;
-    //     }
-    // },
     sign() {
       // set current state of calculator to the currentString if one has been entered
       if (this.currentString) {

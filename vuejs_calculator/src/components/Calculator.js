@@ -6,17 +6,15 @@ export default class Calculator {
         this.operator = null
     }
     // state handling
-    clear () {
+    clear = () => {
         this.operator = null;
         this.rhsOperand = null;
         return this.current = 0;
     }
 
-    resetCurrent () {
-        return this.setCurrent(0);
-    }
+    resetCurrent = () => this.setCurrent(0);
 
-    setCurrent (origN) {
+    setCurrent = (origN) => {
         let n = parseFloat(origN);
         if (isNaN(n)) {
             throw new Error(`setCurrent received invalid float: ${origN}`);
@@ -25,17 +23,17 @@ export default class Calculator {
     }
 
     // mathematical operations
-    add (n) {
+    add = (n) => {
         this.operator = 'add';
         this.rhsOperand = n;
     }
 
-    divide (n) {
+    divide = (n) => {
         this.operator = 'divide';
         this.rhsOperand = n;
     }
 
-    exec () {
+    exec = () => {
         switch (this.operator) {
             case 'add':
                 this.current = this.current + this.rhsOperand;
@@ -55,20 +53,16 @@ export default class Calculator {
         return this.current.toString().length <= 8 ? this.current.toFixed(2) : "E";
     }
 
-    multiply (n) {
+    multiply = (n) => {
         this.operator = 'multiply';
         this.rhsOperand = n;
     }
 
-    percent () {
-        return this.current = this.current / 100;
-    }
+    percent = () => this.current = this.current / 100;
 
-    squareRoot() {
-        return this.current = Math.sqrt(this.current).toFixed(2);
-    }
+    squareRoot = () => this.current = Math.sqrt(this.current).toFixed(2);
 
-    sign () {
+    sign = () => {
         let result = -this.current;
         // prevent negative 0 from being returned
         if (Math.abs(result) === 0) {
@@ -77,7 +71,7 @@ export default class Calculator {
         return this.current = result;
     }
 
-    subtract (n) {
+    subtract = (n) => {
         this.operator = 'subtract';
         this.rhsOperand = n;
     }
