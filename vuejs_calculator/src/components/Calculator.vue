@@ -5,7 +5,7 @@
         {{ calcCurrent }}
       </div>
       <div>
-        {{ currentString == "" ? "0" : currentString }}
+        {{ currentString == "" ? "..." : currentString }}
       </div>
     </div>
     <div @click="clear" class="btn">C</div>
@@ -160,9 +160,15 @@ export default {
 }
 .btn {
   background-color: #f2f2f2;
-  border: 1px solid #999;
   user-select: none;
   cursor: pointer;
+}
+
+.btn:hover {
+  border: none;
+  margin: 1px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  color: #903f37;
 }
 .operator {
   background-color: orange;
