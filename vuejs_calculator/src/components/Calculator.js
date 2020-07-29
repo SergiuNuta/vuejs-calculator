@@ -52,7 +52,7 @@ export default class Calculator {
             default:
                 break;
         }
-        return this.current.toString().length <= 9 ? this.current.toFixed(2) : "E";
+        return this.current.toString().length <= 8 ? this.current.toFixed(2) : "E";
     }
 
     multiply (n) {

@@ -1,16 +1,17 @@
 <template>
   <div class="calculator">
     <div class="display">
-      <span v-if="currentString">
-        {{ currentString }}
-      </span>
-      <span v-else>
+      <div>
         {{ calcCurrent }}
-      </span>
+      </div>
+      <div>
+        {{ currentString == "" ? "0" : currentString }}
+      </div>
     </div>
     <div @click="clear" class="btn">C</div>
     <div @click="sign" class="btn">+/-</div>
     <div @click="percent" class="btn">%</div>
+    <div @click="squareRoot" class="btn">√</div>
     <div @click="setOperator('divide')" class="btn operator">÷</div>
     <div @click="append('7')" class="btn">7</div>
     <div @click="append('8')" class="btn">8</div>
@@ -26,9 +27,8 @@
     <div @click="setOperator('add')" class="btn operator">+</div>
     <div @click="append('0')" class="btn zero">0</div>
     <div @click="dot" class="btn">.</div>
-    <div @click="squareRoot" class="btn">√</div>
     <div @click="pi" class="btn">PI</div>
-    <div @click="equal" class="btn operator">=</div>
+    <div @click="equal" class="btn operator equal">=</div>
   </div>
 </template>
 
@@ -42,10 +42,21 @@ export default {
     return {
       calcCurrent: 0,
       currentString: "",
+      logList: "",
       operator: null,
       operatorClicked: false,
       rhsOperand: null,
     };
+  },
+  mounted() {
+    if (localStorage.calcCurrent) {
+      this.calcCurrent = localStorage.calcCurrent;
+    }
+  },
+  watch: {
+    calcCurrent(newCalcCurrent) {
+      localStorage.calcCurrent = newCalcCurrent;
+    },
   },
   methods: {
     clear() {
@@ -55,6 +66,13 @@ export default {
       this.rhsOperand = null;
       this.operatorClicked = false;
     },
+    // addTolog(number) {
+    //     if(this.operatorClicked == false) {
+    //         this.logList += `${this.currentString}${"+++"}${number}`;
+    //         this.currentString = "";
+    //         this.operatorClicked = true;
+    //     }
+    // },
     sign() {
       // set current state of calculator to the currentString if one has been entered
       if (this.currentString) {
@@ -72,17 +90,20 @@ export default {
       this.currentString = "";
     },
     squareRoot() {
-        if (this.currentString) {
+      if (this.currentString) {
         calc.setCurrent(parseFloat(this.currentString || 0));
       }
       this.calcCurrent = calc.squareRoot().toString(10);
       this.currentString = "";
     },
     pi() {
-        this.currentString = Math.PI.toFixed(2);
+      this.currentString = Math.PI.toFixed(2);
     },
     append(number) {
-      this.currentString = this.currentString.length <= 8 ? `${this.currentString}${number}`.replace(/^0/, "") : this.currentString.disabled = true;
+      this.currentString =
+        this.currentString.length <= 8
+          ? `${this.currentString}${number}`.replace(/^0/, "")
+          : (this.currentString.disabled = true);
     },
     dot() {
       if (this.currentString.indexOf(".") === -1) {
@@ -136,14 +157,14 @@ export default {
   grid-auto-rows: minmax(50px, auto);
 }
 .display {
-    text-align: right;
-    padding: 0 10px 0 0;
+  text-align: right;
+  padding: 0 10px 0 0;
   grid-column: 1 / 5;
   background-color: #333;
   color: white;
 }
-.zero {
-  grid-column: 1 / 3;
+.equal {
+  grid-column: 1 / 5;
 }
 .btn {
   background-color: #f2f2f2;
